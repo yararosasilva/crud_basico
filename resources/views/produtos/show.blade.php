@@ -27,6 +27,7 @@
                 <input type="text" id="quantidade" class="form-control" name="quantidade" value="{{ $produto->quantidade }}" readonly><br/>
             </div>
             <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-warning">Editar</a>
+            <a href="{{ route('produtos.index') }}" class="btn btn-secondary">voltar</a>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

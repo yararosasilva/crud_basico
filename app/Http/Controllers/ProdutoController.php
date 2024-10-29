@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 class ProdutoController extends Controller
 {
 
-    public function index(){
-        $produtos = Produto::all(); // Obtém todos os produtos do banco de dados
-        return view('produtos.index', compact('produtos')); // Passa os produtos para a view
+    public function index()
+    {
+        $produtos = Produto::all(); // ou use a lógica para paginar ou filtrar os produtos
+        return view('produtos.index', compact('produtos'));
     }
     
 

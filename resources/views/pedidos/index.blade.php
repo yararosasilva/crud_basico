@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+    <title>Lista de Pedidos</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
     <style>
-        .product-card {
+        .pedido-card {
             border: 1px solid #e0e0e0;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .product-card:hover {
+        .pedido-card:hover {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             transform: translateY(-3px);
         }
-        .product-info {
+        .pedido-info {
             font-size: 0.9em;
             color: #6c757d;
         }
-        .product-actions a, .product-actions button {
+        .pedido-actions a, .pedido-actions button {
             margin-right: 5px;
         }
     </style>
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">Store</a>
@@ -64,28 +62,27 @@
     </nav>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Lista de Produtos</h1>
-        <a href="{{ route('produtos.create') }}" class="btn btn-primary mb-3">Adicionar Novo Produto</a>
+        <h1 class="mb-4">Lista de Pedidos</h1>
+        <a href="{{ route('pedidos.create') }}" class="btn btn-primary mb-3">Novo Pedido</a>
 
         @if (session('success'))
-        <div id="success-message" class="alert alert-success">
+        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
         </div>
         @endif
 
         <div class="row">
-            @foreach($produtos as $produto)
+            @foreach ($pedidos as $pedido)
             <div class="col-md-4">
-                <div class="product-card">
-                    <h5 class="card-title">{{ $produto->nome }}</h5>
-                    <p class="product-info">ID: {{ $produto->id }}</p>
-                    <p class="product-info">Custo: {{ number_format($produto->custo, 2, ',', '.') }} R$</p>
-                    <p class="product-info">Preço: {{ number_format($produto->preco, 2, ',', '.') }} R$</p>
-                    <p class="product-info">Quantidade: {{ $produto->quantidade }}</p>
-                    <div class="product-actions mt-3">
-                        <a href="{{ route('produtos.show', $produto->id) }}" class="btn btn-info btn-sm">Ver</a>
-                        <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" style="display:inline;">
+                <div class="pedido-card">
+                    <h5 class="card-title">{{ $pedido->cliente }}</h5>
+                    <p class="pedido-info">Produto: {{ $pedido->produto }}</p>
+                    <p class="pedido-info">Quantidade: {{ $pedido->quantidade }}</p>
+                    <p class="pedido-info">Preço: R$ {{ number_format($pedido->preco, 2, ',', '.') }}</p>
+                    <div class="pedido-actions mt-3">
+                        <a href="{{ route('pedidos.show', $pedido->id) }}" class="btn btn-info btn-sm">Ver</a>
+                        <a href="{{ route('pedidos.edit', $pedido->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ route('pedidos.destroy', $pedido->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
@@ -99,9 +96,10 @@
 
     <script>
         setTimeout(function() {
-            const successMessage = document.getElementById('success-message');
-            if (successMessage) {
-                successMessage.style.display = 'none';
+            var alert = document.getElementById('success-alert');
+            if (alert) {
+                var bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
             }
         }, 5000);
     </script>

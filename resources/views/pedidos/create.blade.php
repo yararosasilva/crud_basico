@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Produto</title>
-    <!-- Link do Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-...your-integrity-hash..." crossorigin="anonymous">
+    <title>Criar Novo Pedido</title>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">Store</a>
@@ -42,7 +40,7 @@
     </nav>
 
     <div class="container mt-5">
-        <h1>Criar Produto</h1>
+        <h1>Criar Novo Pedido</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -55,33 +53,35 @@
             </div>
         @endif
 
-        <form action="{{ route('produtos.store') }}" method="POST" class="mt-4">
-            @csrf <!-- Token CSRF -->
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" id="nome" name="nome" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="custo" class="form-label">Custo</label>
-                <input type="text" id="custo" name="custo" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="preco" class="form-label">Preço</label>
-                <input type="text" id="preco" name="preco" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="quantidade" class="form-label">Quantidade</label>
-                <input type="text" id="quantidade" name="quantidade" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="{{ route('produtos.index') }}" class="btn btn-secondary">Voltar</a>
-        </form>
+    <form action="{{ route('pedidos.store') }}" method="POST">
+    @csrf
+    <div class="mb-3">
+        <label for="cliente" class="form-label">Cliente:</label>
+        <input type="text" class="form-control" id="cliente" name="cliente" value="{{ old('cliente') }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="produto" class="form-label">Produto:</label>
+        <select class="form-select" id="produto" name="produto" required>
+            <option value="">Selecione um produto</option>
+            @foreach ($produtos as $produto)
+                <option value="{{ $produto->nome }}">{{ $produto->nome }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="quantidade" class="form-label">Quantidade:</label>
+        <input type="number" class="form-control" id="quantidade" name="quantidade" value="{{ old('quantidade') }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="preco" class="form-label">Preço:</label>
+        <input type="number" class="form-control" id="preco" name="preco" step="0.01" value="{{ old('preco') }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Criar Pedido</button>
+    <a href="{{ route('pedidos.index') }}" class="btn btn-secondary">Voltar</a>
+</form>       
     </div>
 
-     <!-- Scripts do Bootstrap -->
+    <!-- Scripts do Bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-...your-integrity-hash..." crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-hzvD4zBO8zP66nmLXUbtgP5AONR5MTxS9AqV8DNk7q5N8xUevgiXsnXTX8vOPaN4" crossorigin="anonymous"></script>
 </body>
 </html>
